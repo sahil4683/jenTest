@@ -1,117 +1,68 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0"
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-    <modelVersion>4.0.0</modelVersion>
 
-    <!-- Define project coordinates -->
-    <groupId>com.example</groupId>
-    <artifactId>my-struts2-webapp</artifactId>
-    <version>1.0</version>
-    <packaging>war</packaging> <!-- Packaging type for a web application -->
 
-    <!-- Define project dependencies -->
-    <dependencies>
-        <!-- Struts 2 -->
-        <dependency>
-            <groupId>org.apache.struts</groupId>
-            <artifactId>struts2-core</artifactId>
-            <version>2.5.26</version> <!-- Adjust to your Struts 2 version -->
-        </dependency>
-
-        <!-- Servlet API (provided by servlet container) -->
-        <dependency>
-            <groupId>javax.servlet</groupId>
-            <artifactId>javax.servlet-api</artifactId>
-            <version>4.0.1</version> <!-- Adjust to your Servlet API version -->
-            <scope>provided</scope> <!-- Provided scope for servlet container -->
-        </dependency>
-
-        <!-- Other dependencies for your project -->
-    </dependencies>
-
-    <!-- Build configuration -->
-    <build>
-        <sourceDirectory>src/main/java</sourceDirectory>
-        <resources>
-            <resource>
-                <directory>src/main/resources</directory> <!-- Struts configuration files -->
-            </resource>
-        </resources>
-        <plugins>
-            <!-- Maven WAR plugin to package web application -->
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-war-plugin</artifactId>
-                <version>3.2.3</version> <!-- Adjust to the appropriate version -->
-                <configuration>
-                    <!-- Configure web application-specific settings if needed -->
-                </configuration>
-            </plugin>
-        </plugins>
-    </build>
-</project>
+// Component Code Teat
+it(`should have a title 'I love pizza!'`, async(() => {
+  fixture = TestBed.createComponent(PizzaComponent);
+  component = fixture.debugElement.componentInstance;
+  expect(component.title).toEqual('I love pizza!');
+}));
 
 
 
 
+// Api Call Test 
+import { TestBed, async, inject } from '@angular/core/testing';
+import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
+import { PostService } from './post.service';
+describe('PostService', () => {
+  let postService: PostService;
+  let httpMock: HttpTestingController;
+  beforeEach(() => {
+    TestBed.configureTestingModule({
+      imports: [
+        HttpClientTestingModule,
+      ],
+      providers: [
+        PostService
+      ],
+    });
+    postService = TestBed.get(PostService);
+    httpMock = TestBed.get(HttpTestingController);
+  });
+  it(`should fetch posts as an Observable`, async(inject([HttpTestingController, PostService],
+    (httpClient: HttpTestingController, postService: PostService) => {
+      const postItem = [
+        {
+          "userId": 1,
+          "id": 1,
+          "title": "sunt aut facere repellat provident occaecati excepturi optio reprehenderit",
+          "body": "quia et suscipit\nsuscipit recusandae consequuntur expedita et cum\nreprehenderit molestiae ut ut quas totam\nnostrum rerum est autem sunt rem eveniet architecto"
+        },
+        {
+          "userId": 1,
+          "id": 2,
+          "title": "qui est esse",
+          "body": "est rerum tempore vitae\nsequi sint nihil reprehenderit dolor beatae ea dolores neque\nfugiat blanditiis voluptate porro vel nihil molestiae ut reiciendis\nqui aperiam non debitis possimus qui neque nisi nulla"
+        },
+        {
+          "userId": 1,
+          "id": 3,
+          "title": "ea molestias quasi exercitationem repellat qui ipsa sit aut",
+          "body": "et iusto sed quo iure\nvoluptatem occaecati omnis eligendi aut ad\nvoluptatem doloribus vel accusantium quis pariatur\nmolestiae porro eius odio et labore et velit aut"
+        }
+      ];
 
-<build>
-    <!-- ... -->
-    <plugins>
-        <plugin>
-            <groupId>org.apache.maven.plugins</groupId>
-            <artifactId>maven-war-plugin</artifactId>
-            <version>3.2.3</version> <!-- Adjust to the appropriate version -->
-            <configuration>
-                <!-- Define web application-specific configurations here -->
-            </configuration>
-        </plugin>
-        <!-- Other plugins you may need -->
-    </plugins>
-</build>
+      postService.getPosts()
+        .subscribe((posts: any) => {
+          expect(posts.length).toBe(3);
+        });
+      let req = httpMock.expectOne('https://jsonplaceholder.typicode.com/posts');
+      expect(req.request.method).toBe("GET");
+      req.flush(postItem);
+      httpMock.verify();
+    })));
+});
 
 
 
-
-
-
-
-
-
-
-<build>
-    <sourceDirectory>src</sourceDirectory> <!-- Java source files -->
-    <resources>
-        <resource>
-            <directory>src</directory> <!-- Configuration files, if any -->
-        </resource>
-        <resource>
-            <directory>WebContent</directory> <!-- JSP files and web-related resources -->
-        </resource>
-    </resources>
-</build>
-
-
-
-
-
-mvn install:install-file -Dfile=/path/to/your/custom.jar -DgroupId=com.example -DartifactId=custom-artifact -Dversion=1.0 -Dpackaging=jar
-
-
-
-
-
-
-my-struts2-maven-project
-├── src
-│   ├── main
-│   │   ├── java       (Java source files)
-│   │   └── resources  (Configuration files)
-│   └── test
-│       ├── java       (Test source files)
-│       └── resources  (Test configuration files)
-├── target             (Generated output files)
-├── WebContent         (JSP and web-related files)
-├── pom.xml            (Maven project configuration)
-└── ...
 
