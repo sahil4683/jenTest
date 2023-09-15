@@ -1,4 +1,10 @@
 
+https://chat.openai.com/share/fc8b6f56-ccb6-4954-b002-16e990ddabd3
+
+
+https://chat.openai.com/share/c09c80b1-24fa-44be-8904-68ea1ff497d0
+
+https://chat.openai.com/share/0a8ddd7f-5ee0-4a1d-bf77-4835408c25ad
 
 // Component Code Teat
 it(`should have a title 'I love pizza!'`, async(() => {
